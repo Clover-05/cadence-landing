@@ -5,29 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Cadence — Never overthink a text again.</title>
 <meta name="description" content="An AI communication coach one tap away from any conversation. Learns how you talk and helps you say what you mean — in six seconds." />
-<meta name="theme-color" content="#faf7f2" />
+<meta name="theme-color" content="#fdfaff" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg:          #faf7f2;
-    --bg-warm:     #f5f0e8;
+    --bg:          #fdfaff;
+    --bg-warm:     #f7f0ff;
     --bg-card:     #ffffff;
-    --bg-card-alt: #f8f4ed;
-    --ink:         #2c2a25;
-    --ink-mid:     #5c5850;
-    --ink-dim:     #8a847a;
-    --ink-muted:   #b5aea2;
-    --accent:      #d4940a;
-    --accent-soft: #e8af2e;
-    --accent-bg:   #fdf3dc;
-    --stress:      #c4a08a;
-    --stress-dim:  #d4c0b0;
-    --line:        rgba(44, 42, 37, 0.07);
-    --line-strong: rgba(44, 42, 37, 0.12);
+    --bg-card-alt: #faf5ff;
+    --ink:         #2e1065;
+    --ink-mid:     #5b2a8a;
+    --ink-dim:     #8a6fb0;
+    --ink-muted:   #b9a5d1;
+    --violet:      #7c3aed;
+    --violet-soft: #9456f2;
+    --violet-bg:   #f3eafd;
+    --pink:        #ec4899;
+    --coral:       #f97316;
+    --accent:      #7c3aed;
+    --accent-soft: #9456f2;
+    --accent-bg:   #f3eafd;
+    --stress:      #ec4899;
+    --stress-dim:  #f9a8d4;
+    --line:        rgba(46, 16, 101, 0.08);
+    --line-strong: rgba(46, 16, 101, 0.14);
     --max:         1080px;
     --col:         580px;
     --serif:       "Instrument Serif", Georgia, serif;
@@ -35,6 +40,7 @@
     --mono:        "JetBrains Mono", "SF Mono", monospace;
     --ease:        cubic-bezier(.22,.61,.36,1);
     --ease-out:    cubic-bezier(.0,.0,.2,1);
+    --brand-grad:  linear-gradient(90deg, #7c3aed 0%, #ec4899 55%, #f97316 100%);
   }
 
   *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,9 +60,9 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(212, 148, 10, 0.045), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(196, 160, 138, 0.04), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 80% 70%, rgba(212, 148, 10, 0.03), transparent 50%);
+      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(124, 58, 237, 0.07), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 15% 80%, rgba(236, 72, 153, 0.05), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 85% 70%, rgba(249, 115, 22, 0.045), transparent 55%);
     pointer-events: none;
     z-index: 0;
   }
@@ -68,7 +74,7 @@
     background-size: 200px;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.5;
+    opacity: 0.45;
   }
   main, header, footer { position: relative; z-index: 2; }
   a { color: inherit; text-decoration: none; }
@@ -77,34 +83,55 @@
   .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 28px; }
   .col  { max-width: var(--col); margin: 0 auto; text-align: center; }
 
-  .topbar { padding: 28px 0 0; display: flex; justify-content: center; }
-  .topbar .mark {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.25em;
+  /* topbar — logo mark + name */
+  .topbar {
+    padding: 26px 0 0;
+    display: flex;
+    justify-content: center;
+  }
+  .brand-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-chip .mark-mini {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+  .brand-chip .name {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-dim);
+    color: var(--ink);
   }
 
-  .hero { padding: 60px 0 0; text-align: center; }
+  .hero { padding: 48px 0 0; text-align: center; }
 
+  /* hero wordmark — Cadence, capital C, gradient fill */
   .wordmark {
     font-family: var(--serif);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(64px, 13vw, 136px);
-    line-height: 0.88;
-    letter-spacing: -0.025em;
-    color: var(--ink);
+    font-size: clamp(68px, 13.5vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    padding-bottom: 0.08em; /* prevent descender clipping */
   }
   .wordmark-line {
     display: block;
-    width: 44px;
+    width: 52px;
     height: 2px;
-    margin: 14px auto 0;
-    background: var(--accent);
-    opacity: 0.6;
+    margin: 16px auto 0;
+    background: var(--brand-grad);
+    opacity: 0.85;
     border-radius: 1px;
   }
 
@@ -113,7 +140,7 @@
   .opener-label {
     font-family: var(--mono);
     font-size: 9px;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink-dim);
     margin-bottom: 10px;
@@ -128,7 +155,7 @@
     font-size: 14.5px;
     color: var(--ink-mid);
     line-height: 1.5;
-    box-shadow: 0 2px 12px rgba(44, 42, 37, 0.04);
+    box-shadow: 0 4px 18px rgba(124, 58, 237, 0.06);
     text-align: left;
   }
   .opener-cursor { margin-top: 14px; }
@@ -145,7 +172,7 @@
     display: inline-block;
     width: 2px;
     height: 16px;
-    background: var(--ink-dim);
+    background: var(--pink);
     margin-left: 2px;
     vertical-align: text-bottom;
     animation: blink 1s step-end infinite;
@@ -171,12 +198,12 @@
   .waveform-labels span {
     font-family: var(--mono);
     font-size: 9px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 500;
   }
-  .wl-stress { color: var(--stress); }
-  .wl-flow { color: var(--accent); }
+  .wl-stress { color: var(--pink); }
+  .wl-flow { color: var(--violet); }
   .wave-a { animation: wv 7s ease-in-out infinite; }
   .wave-b { animation: wv 7s ease-in-out infinite; animation-delay: -3.5s; }
   @keyframes wv { 0%,100%{opacity:.6} 50%{opacity:1} }
@@ -188,6 +215,7 @@
     line-height: 1.1;
     letter-spacing: -0.02em;
     margin-bottom: 18px;
+    color: var(--ink);
   }
   .subhead {
     font-size: 15.5px;
@@ -210,8 +238,8 @@
     transition: border-color 300ms var(--ease), box-shadow 300ms var(--ease);
   }
   .signup-form:focus-within {
-    border-color: rgba(212, 148, 10, 0.4);
-    box-shadow: 0 0 0 3px rgba(212, 148, 10, 0.08), 0 8px 30px -10px rgba(212, 148, 10, 0.12);
+    border-color: rgba(124, 58, 237, 0.45);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12), 0 10px 32px -10px rgba(124, 58, 237, 0.28);
   }
   .signup-form input {
     flex: 1;
@@ -227,18 +255,20 @@
   .signup-form input::placeholder { color: var(--ink-dim); }
   .signup-form button {
     padding: 13px 24px;
-    background: var(--accent);
+    background: var(--brand-grad);
+    background-size: 200% 100%;
+    background-position: 0% 0%;
     color: #fff;
     font-weight: 600;
     font-size: 13.5px;
     white-space: nowrap;
-    transition: background 250ms var(--ease);
+    transition: background-position 450ms var(--ease), filter 250ms var(--ease);
     border-radius: 0 999px 999px 0;
   }
-  .signup-form button:hover { background: var(--accent-soft); }
+  .signup-form button:hover { background-position: 100% 0%; filter: brightness(1.05); }
   .signup-meta { font-size: 12px; color: var(--ink-dim); margin-bottom: 4px; }
   .signup-count { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
-  .signup-count strong { color: var(--accent); font-weight: 500; }
+  .signup-count strong { color: var(--violet); font-weight: 500; }
 
   .signup-success {
     display: none;
@@ -249,15 +279,15 @@
     margin: 0 auto 12px;
     padding: 18px 24px;
     border-radius: 20px;
-    border: 1px solid rgba(212, 148, 10, 0.2);
-    background: var(--accent-bg);
+    border: 1px solid rgba(124, 58, 237, 0.22);
+    background: var(--violet-bg);
   }
   .signup-success .check {
     width: 30px; height: 30px; border-radius: 50%;
-    background: var(--accent); display: grid; place-items: center;
+    background: var(--brand-grad); display: grid; place-items: center;
     color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 4px;
   }
-  .signup-success p { font-size: 14.5px; font-weight: 500; }
+  .signup-success p { font-size: 14.5px; font-weight: 500; color: var(--ink); }
   .signup-success .sub { font-size: 12.5px; color: var(--ink-mid); font-weight: 400; }
 
   /* features */
@@ -272,28 +302,41 @@
     background: var(--bg-card);
     border: 1px solid var(--line);
     border-radius: 16px;
-    transition: box-shadow 400ms var(--ease), transform 400ms var(--ease);
+    transition: box-shadow 400ms var(--ease), transform 400ms var(--ease), border-color 300ms var(--ease);
   }
-  .f-item:hover { box-shadow: 0 8px 30px rgba(44,42,37,0.06); transform: translateY(-2px); }
+  .f-item:hover {
+    box-shadow: 0 10px 32px rgba(124, 58, 237, 0.10);
+    transform: translateY(-2px);
+    border-color: rgba(124, 58, 237, 0.18);
+  }
   .f-item .num {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
-    color: var(--accent); display: block; margin-bottom: 12px; font-weight: 500;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    display: block; margin-bottom: 12px; font-weight: 500;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  .f-item h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin-bottom: 8px; }
+  .f-item h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin-bottom: 8px; color: var(--ink); }
   .f-item p { font-size: 13px; line-height: 1.6; color: var(--ink-mid); }
 
   /* 6s */
   .speed { margin: 80px auto; text-align: center; max-width: 520px; position: relative; }
   .speed::before {
     content: ""; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -55%); width: 260px; height: 260px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(212,148,10,0.08) 0%, transparent 70%);
+    transform: translate(-50%, -55%); width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.10) 0%, rgba(236, 72, 153, 0.06) 45%, transparent 70%);
     pointer-events: none;
   }
   .speed-num {
     font-family: var(--serif); font-style: italic;
     font-size: clamp(72px, 14vw, 128px); line-height: 0.85;
-    color: var(--accent); letter-spacing: -0.04em; position: relative;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.04em; position: relative;
+    padding-bottom: 0.08em;
   }
   .speed-label {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
@@ -308,7 +351,7 @@
   /* how */
   .how { max-width: 460px; margin: 0 auto; text-align: left; }
   .how .label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--ink-dim); margin-bottom: 20px;
     text-align: center; font-weight: 500;
   }
@@ -316,13 +359,17 @@
   .step:last-child { border-bottom: 0; }
   .step .dot {
     flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%;
-    background: var(--accent-bg); border: 1px solid rgba(212,148,10,0.2);
+    background: var(--violet-bg); border: 1px solid rgba(124, 58, 237, 0.25);
     display: grid; place-items: center; margin-top: 1px;
-    color: var(--accent); font-family: var(--mono); font-size: 11px; font-weight: 500;
-    transition: background 260ms var(--ease), border-color 260ms var(--ease);
+    color: var(--violet); font-family: var(--mono); font-size: 11px; font-weight: 500;
+    transition: background 260ms var(--ease), border-color 260ms var(--ease), color 260ms var(--ease);
   }
-  .step:hover .dot { background: rgba(212,148,10,0.12); border-color: rgba(212,148,10,0.35); }
-  .step h4 { font-size: 14.5px; font-weight: 500; margin-bottom: 2px; }
+  .step:hover .dot {
+    background: rgba(124, 58, 237, 0.18);
+    border-color: rgba(124, 58, 237, 0.4);
+    color: var(--ink);
+  }
+  .step h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 2px; color: var(--ink); }
   .step p { font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
 
   /* proof */
@@ -330,6 +377,14 @@
     margin: 64px auto; text-align: center; max-width: 500px;
     padding: 32px 28px; background: var(--bg-card-alt);
     border: 1px solid var(--line); border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .proof::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--brand-grad);
+    opacity: 0.7;
   }
   .proof-quote {
     font-family: var(--serif); font-style: italic; font-size: 19px;
@@ -348,21 +403,26 @@
     width: 100%;
   }
   .final .pricing {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--ink-dim); margin-bottom: 24px;
-    padding-left: 0.1em; /* compensate letter-spacing visual offset */
+    padding-left: 0.1em;
   }
-  .final .pricing .sep { margin: 0 10px; opacity: 0.35; }
+  .final .pricing .sep { margin: 0 10px; opacity: 0.4; color: var(--violet); }
   .cta-bottom {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 26px; color: #fff; background: var(--accent);
+    padding: 14px 28px; color: #fff;
+    background: var(--brand-grad);
+    background-size: 200% 100%;
+    background-position: 0% 0%;
     border-radius: 999px; font-weight: 600; font-size: 14px;
-    transition: all 300ms var(--ease);
-    box-shadow: 0 4px 20px -6px rgba(212,148,10,0.3);
+    transition: background-position 450ms var(--ease), transform 300ms var(--ease), box-shadow 300ms var(--ease), filter 250ms var(--ease);
+    box-shadow: 0 6px 22px -6px rgba(124, 58, 237, 0.45), 0 2px 8px -2px rgba(236, 72, 153, 0.25);
   }
   .cta-bottom:hover {
-    background: var(--accent-soft); transform: translateY(-1px);
-    box-shadow: 0 8px 28px -6px rgba(212,148,10,0.35);
+    background-position: 100% 0%;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 32px -6px rgba(124, 58, 237, 0.5), 0 4px 12px -2px rgba(236, 72, 153, 0.35);
+    filter: brightness(1.05);
   }
   .cta-bottom .arrow { display: inline-block; transition: transform 250ms var(--ease); }
   .cta-bottom:hover .arrow { transform: translateX(3px); }
@@ -385,7 +445,7 @@
 
   @media (max-width: 720px) {
     .wrap { padding: 0 20px; }
-    .hero { padding: 44px 0 0; }
+    .hero { padding: 36px 0 0; }
     .features { grid-template-columns: 1fr; gap: 14px; }
     .waveform-wrap { margin: 36px auto 40px; }
     .speed { margin: 56px auto; }
@@ -405,12 +465,32 @@
 </head>
 <body>
 
-  <header class="topbar wrap"><div class="mark">cadence.ai</div></header>
+  <header class="topbar wrap">
+    <a href="#" class="brand-chip" aria-label="Cadence home">
+      <svg class="mark-mini" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="mmGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#7c3aed"/>
+            <stop offset="50%" stop-color="#ec4899"/>
+            <stop offset="100%" stop-color="#f97316"/>
+          </linearGradient>
+        </defs>
+        <g transform="rotate(5, 105, 105)">
+          <rect x="18" y="18" width="174" height="174" rx="32" ry="32" fill="none" stroke="#7c3aed" stroke-opacity="0.5" stroke-width="8"/>
+          <rect x="36" y="36" width="138" height="138" rx="26" ry="26" fill="none" stroke="#ec4899" stroke-opacity="0.65" stroke-width="8"/>
+          <rect x="54" y="54" width="102" height="102" rx="20" ry="20" fill="none" stroke="#f97316" stroke-opacity="0.85" stroke-width="8"/>
+        </g>
+        <polyline points="58,105 72,105 78,95 84,115 90,80 96,130 102,55 108,140 114,75 120,115 126,95 132,105 152,105"
+                  fill="none" stroke="url(#mmGrad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="name">Cadence</span>
+    </a>
+  </header>
 
   <main>
     <section class="hero wrap">
 
-      <h1 class="wordmark rv">cadence<span class="wordmark-line"></span></h1>
+      <h1 class="wordmark rv">Cadence<span class="wordmark-line"></span></h1>
 
       <!-- the frozen moment -->
       <div class="opener rv d1">
@@ -427,25 +507,25 @@
         <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           <defs>
             <linearGradient id="wg1" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#c4a08a" stop-opacity="0"/>
-              <stop offset="10%"  stop-color="#c4a08a" stop-opacity="0.6"/>
-              <stop offset="40%"  stop-color="#c4a08a" stop-opacity="0.5"/>
-              <stop offset="55%"  stop-color="#d4940a" stop-opacity="0.7"/>
-              <stop offset="80%"  stop-color="#d4940a" stop-opacity="0.9"/>
-              <stop offset="95%"  stop-color="#d4940a" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#d4940a" stop-opacity="0"/>
+              <stop offset="0%"   stop-color="#ec4899" stop-opacity="0"/>
+              <stop offset="10%"  stop-color="#ec4899" stop-opacity="0.7"/>
+              <stop offset="35%"  stop-color="#ec4899" stop-opacity="0.8"/>
+              <stop offset="55%"  stop-color="#f97316" stop-opacity="0.85"/>
+              <stop offset="80%"  stop-color="#7c3aed" stop-opacity="0.95"/>
+              <stop offset="95%"  stop-color="#7c3aed" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="wg2" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#c4a08a" stop-opacity="0"/>
-              <stop offset="15%"  stop-color="#c4a08a" stop-opacity="0.2"/>
-              <stop offset="50%"  stop-color="#d4c0b0" stop-opacity="0.2"/>
-              <stop offset="85%"  stop-color="#d4940a" stop-opacity="0.25"/>
-              <stop offset="100%" stop-color="#d4940a" stop-opacity="0"/>
+              <stop offset="0%"   stop-color="#ec4899" stop-opacity="0"/>
+              <stop offset="15%"  stop-color="#ec4899" stop-opacity="0.22"/>
+              <stop offset="50%"  stop-color="#f97316" stop-opacity="0.22"/>
+              <stop offset="85%"  stop-color="#7c3aed" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="bl" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#2c2a25" stop-opacity="0"/>
-              <stop offset="50%"  stop-color="#2c2a25" stop-opacity="0.06"/>
-              <stop offset="100%" stop-color="#2c2a25" stop-opacity="0"/>
+              <stop offset="0%"   stop-color="#2e1065" stop-opacity="0"/>
+              <stop offset="50%"  stop-color="#2e1065" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#2e1065" stop-opacity="0"/>
             </linearGradient>
           </defs>
           <line x1="0" y1="60" x2="760" y2="60" stroke="url(#bl)" stroke-width="0.5"/>
@@ -460,22 +540,22 @@
                    C498,24 488,96 510,96 C532,96 522,24 545,24 C568,24 558,96 580,96
                    C602,96 592,24 615,24 C638,24 628,96 650,96 C672,96 662,24 685,24
                    C708,24 698,94 718,92 C738,90 750,62 760,60"
-                fill="none" stroke="url(#wg1)" stroke-width="1.5"
+                fill="none" stroke="url(#wg1)" stroke-width="1.8"
                 stroke-linecap="round" stroke-linejoin="round"/>
           <path class="wave-b"
                 d="M0,60 Q28,60 46,48 T92,72 T138,45 T184,74 T230,50 T276,70 T322,55
                    T380,60 Q408,35 438,88 T508,32 T578,88 T648,32 T718,85 T760,60"
                 fill="none" stroke="url(#wg2)" stroke-width="1" stroke-linecap="round"/>
-          <g opacity="0.25">
-            <line x1="410" y1="102" x2="410" y2="110" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="440" y1="102" x2="440" y2="112" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="475" y1="102" x2="475" y2="108" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="510" y1="102" x2="510" y2="112" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="545" y1="102" x2="545" y2="108" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="580" y1="102" x2="580" y2="112" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="615" y1="102" x2="615" y2="108" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="650" y1="102" x2="650" y2="112" stroke="#d4940a" stroke-width="0.8"/>
-            <line x1="685" y1="102" x2="685" y2="108" stroke="#d4940a" stroke-width="0.8"/>
+          <g opacity="0.3">
+            <line x1="410" y1="102" x2="410" y2="110" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="440" y1="102" x2="440" y2="112" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="475" y1="102" x2="475" y2="108" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="510" y1="102" x2="510" y2="112" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="545" y1="102" x2="545" y2="108" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="580" y1="102" x2="580" y2="112" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="615" y1="102" x2="615" y2="108" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="650" y1="102" x2="650" y2="112" stroke="#7c3aed" stroke-width="0.9"/>
+            <line x1="685" y1="102" x2="685" y2="108" stroke="#7c3aed" stroke-width="0.9"/>
           </g>
         </svg>
         <div class="waveform-labels">
@@ -501,7 +581,6 @@
             <span class="sub">We'll reach out when Cadence is ready.</span>
           </div>
           <p class="signup-meta">Free to start · No credit card required</p>
-          <p class="signup-count"><strong>843</strong> people on the waitlist</p>
         </div>
       </div>
 
@@ -582,7 +661,6 @@
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
   // ── Google Apps Script endpoint ──
-  // Replace this URL after deploying google-apps-script.js to your Google Sheet
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4Scp46_2p-FRK0y5a0PEQfhGV69cQrB5Sy7i1CSNY-__zVL7EWx6lY68HuIAI6_6G/exec";
 
   const form       = document.getElementById('waitlistForm');
@@ -594,7 +672,7 @@
   if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.startsWith("YOUR_")) {
     fetch(APPS_SCRIPT_URL)
       .then(r => r.json())
-      .then(d => { if (d.ok && d.count) countEl.textContent = d.count.toLocaleString(); })
+      .then(d => { if (d.ok && d.count && countEl) countEl.textContent = d.count.toLocaleString(); })
       .catch(() => {});
   }
 
@@ -604,11 +682,9 @@
     const email = form.querySelector('input[name="email"]').value.trim();
     if (!email) return false;
 
-    // Loading state
     submitBtn.disabled = true;
     submitBtn.textContent = 'Joining...';
 
-    // If the URL hasn't been configured yet, just show success (dev mode)
     if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith("YOUR_")) {
       showSuccess();
       return false;
@@ -616,17 +692,12 @@
 
     fetch(APPS_SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors", // Apps Script doesn't support CORS preflight
+      mode: "no-cors",
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify({ email: email, source: "landing-page" })
     })
-    .then(() => {
-      // no-cors means opaque response — we trust it succeeded
-      showSuccess();
-    })
+    .then(() => { showSuccess(); })
     .catch(() => {
-      // Network error — still show success to not lose the lead,
-      // but log for debugging
       console.warn("Waitlist submission may have failed — check the Google Sheet.");
       showSuccess();
     });
@@ -640,9 +711,10 @@
     submitBtn.disabled = false;
     submitBtn.textContent = 'Join waitlist';
 
-    // Optimistically bump the counter
-    const current = parseInt(countEl.textContent.replace(/,/g, ''), 10) || 0;
-    countEl.textContent = (current + 1).toLocaleString();
+    if (countEl) {
+      const current = parseInt(countEl.textContent.replace(/,/g, ''), 10) || 0;
+      countEl.textContent = (current + 1).toLocaleString();
+    }
   }
 </script>
 </body>
