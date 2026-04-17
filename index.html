@@ -267,8 +267,6 @@
   }
   .signup-form button:hover { background-position: 100% 0%; filter: brightness(1.05); }
   .signup-meta { font-size: 12px; color: var(--ink-dim); margin-bottom: 4px; }
-  .signup-count { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
-  .signup-count strong { color: var(--violet); font-weight: 500; }
 
   .signup-success {
     display: none;
@@ -665,16 +663,7 @@
 
   const form       = document.getElementById('waitlistForm');
   const successEl  = document.getElementById('successMsg');
-  const countEl    = document.querySelector('.signup-count strong');
   const submitBtn  = form.querySelector('button[type="submit"]');
-
-  // Fetch live waitlist count on page load
-  if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.startsWith("YOUR_")) {
-    fetch(APPS_SCRIPT_URL)
-      .then(r => r.json())
-      .then(d => { if (d.ok && d.count && countEl) countEl.textContent = d.count.toLocaleString(); })
-      .catch(() => {});
-  }
 
   function handleSignup(e) {
     e.preventDefault();
@@ -711,10 +700,6 @@
     submitBtn.disabled = false;
     submitBtn.textContent = 'Join waitlist';
 
-    if (countEl) {
-      const current = parseInt(countEl.textContent.replace(/,/g, ''), 10) || 0;
-      countEl.textContent = (current + 1).toLocaleString();
-    }
   }
 </script>
 </body>
