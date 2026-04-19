@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Cadence — Never overthink a text again.</title>
+<title>Cadence — for people who rewrite texts five times before hitting send.</title>
 <meta name="description" content="An AI communication coach one tap away from any conversation. Learns how you talk and helps you say what you mean — in six seconds." />
 <meta name="theme-color" content="#fdfaff" />
 
@@ -459,9 +459,64 @@
     .rv { opacity: 1; transform: none; }
     .opener-reply .cursor-blink { animation: none; opacity: 1; }
   }
+
+  /* ── countdown banner ── */
+  .countdown-banner {
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-align: center;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 10;
+    line-height: 1.45;
+  }
+  .countdown-banner .slot-live {
+    color: #fff;
+    font-weight: 700;
+    font-size: 12.5px;
+  }
+  @media (max-width: 540px) {
+    .countdown-banner { font-size: 10.5px; padding: 9px 16px; }
+    .countdown-banner .slot-live { font-size: 12px; }
+  }
+
+  /* ── demo video ── */
+  .demo-video-wrap {
+    margin: 48px auto 0;
+    max-width: 820px;
+    width: 100%;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 24px 72px rgba(124,58,237,0.24), 0 8px 24px rgba(0,0,0,0.14);
+    background: var(--ink);
+  }
+  .demo-video-wrap video {
+    width: 100%;
+    display: block;
+  }
+  .demo-video-caption {
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin: 14px auto 0;
+    text-align: center;
+    max-width: 820px;
+    letter-spacing: 0.01em;
+  }
+  @media (max-width: 860px) {
+    .demo-video-wrap { max-width: 100%; border-radius: 20px; margin-top: 32px; }
+    .demo-video-caption { max-width: 100%; }
+  }
 </style>
 </head>
 <body>
+
+  <!-- countdown banner — slot-live + day-live are wired in JS below -->
+  <div class="countdown-banner" id="countdownBanner">
+    day <span id="dayLive">3</span> of 30 &middot; <span class="slot-live" id="bannerCount">3</span> / 100 early access slots filled &middot; if we hit 100, cadence ships. if we don't, it dies.
+  </div>
 
   <header class="topbar wrap">
     <a href="#" class="brand-chip" aria-label="Cadence home">
@@ -563,22 +618,29 @@
       </div>
 
       <div class="col">
-        <h2 class="headline rv d2">Never overthink<br>a text again.</h2>
+        <h2 class="headline rv d2">for people who rewrite texts<br>five times before hitting send.</h2>
         <p class="subhead rv d2">
-          An AI communication coach that learns <em>how you talk</em>
-          and helps you say what you mean — in any conversation.
+          an ai coach that learns <em>how you talk</em> and hands you three replies in your voice. six seconds, start to sent. not a chatbot.
         </p>
-        <div class="rv d3">
+
+        <!-- 30-sec demo — autoplay muted loop, no controls -->
+        <!-- Replace the src value with your hosted video URL or uploaded file path -->
+        <div class="demo-video-wrap rv d3">
+          <video autoplay muted loop playsinline src="Video%20Generation/cadence-launch/out/cadence-launch.mp4" id="demoVideo"></video>
+        </div>
+        <p class="demo-video-caption rv d3">real flow. one message in, one reply out. six seconds.</p>
+
+        <div class="rv d3" style="margin-top:32px;">
           <form class="signup-form" id="waitlistForm" onsubmit="return handleSignup(event)">
             <input type="email" name="email" placeholder="you@email.com" required autocomplete="email" aria-label="Email address" />
-            <button type="submit">Join waitlist</button>
+            <button type="submit" id="submitBtn">claim slot 4 / 100 &nbsp;→</button>
           </form>
           <div class="signup-success" id="successMsg">
             <div class="check">✓</div>
-            <p>You're on the list.</p>
-            <span class="sub">We'll reach out when Cadence is ready.</span>
+            <p id="successSlot">you're slot 4 / 100.</p>
+            <span class="sub">if we hit 100 by day 30, cadence ships and you're in free.<br>if we don't, your inbox is safe.<br>— clovis</span>
           </div>
-          <p class="signup-meta">Free to start · No credit card required</p>
+          <p class="signup-meta">free for the first 100. no card. we email you when it ships.</p>
         </div>
       </div>
 
@@ -629,18 +691,11 @@
     </section>
 
     <section class="wrap rv">
-      <div class="proof">
-        <p class="proof-quote">"I used to take 20 minutes to reply to a simple text. Now I just open Cadence and it already knows what I'd want to say."</p>
-        <p class="proof-attr">— early beta tester · dry texter in recovery</p>
-      </div>
-    </section>
-
-    <section class="wrap rv">
       <div class="final">
         <div class="pricing">
-          $6.99 / mo<span class="sep">·</span>15 free replies / day<span class="sep">·</span>iOS + Android
+          free lifetime access for the first 100<span class="sep">·</span>no card<span class="sep">·</span>android first
         </div>
-        <a href="#" class="cta-bottom" onclick="document.querySelector('.signup-form input').focus();window.scrollTo({top:0,behavior:'smooth'});return false;">
+        <a href="#" class="cta-bottom" onclick="var el=document.querySelector('.signup-form input');el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){el.focus();},500);return false;">
           Get early access <span class="arrow">→</span>
         </a>
       </div>
@@ -650,6 +705,22 @@
   <footer class="wrap">cadence · 2026</footer>
 
 <script>
+  // ── Counter config — update these two numbers manually each day ──
+  // SIGNUP_COUNT = current number of signups in your Google Sheet
+  // DAY          = how many days since you launched (started at 1)
+  const SIGNUP_COUNT = 3;
+  const DAY          = 3;
+
+  // ── Wire counter into banner + CTA button ──
+  const bannerCount = document.getElementById('bannerCount');
+  const dayLive     = document.getElementById('dayLive');
+  const submitBtn   = document.getElementById('submitBtn');
+  const successSlot = document.getElementById('successSlot');
+
+  if (bannerCount) bannerCount.textContent = SIGNUP_COUNT;
+  if (dayLive)     dayLive.textContent     = DAY;
+  if (submitBtn)   submitBtn.innerHTML     = `claim slot ${SIGNUP_COUNT + 1} / 100 &nbsp;→`;
+
   // ── Reveal on scroll ──
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
@@ -661,9 +732,8 @@
   // ── Google Apps Script endpoint ──
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4Scp46_2p-FRK0y5a0PEQfhGV69cQrB5Sy7i1CSNY-__zVL7EWx6lY68HuIAI6_6G/exec";
 
-  const form       = document.getElementById('waitlistForm');
-  const successEl  = document.getElementById('successMsg');
-  const submitBtn  = form.querySelector('button[type="submit"]');
+  const form      = document.getElementById('waitlistForm');
+  const successEl = document.getElementById('successMsg');
 
   function handleSignup(e) {
     e.preventDefault();
@@ -672,7 +742,7 @@
     if (!email) return false;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Joining...';
+    submitBtn.innerHTML = 'claiming…';
 
     if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith("YOUR_")) {
       showSuccess();
@@ -695,11 +765,12 @@
   }
 
   function showSuccess() {
-    form.style.display = 'none';
+    const slotNum = SIGNUP_COUNT + 1;
+    if (successSlot) successSlot.textContent = `you're slot ${slotNum} / 100.`;
+    form.style.display    = 'none';
     successEl.style.display = 'flex';
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Join waitlist';
-
+    submitBtn.disabled    = false;
+    submitBtn.innerHTML   = `claim slot ${slotNum + 1} / 100 &nbsp;→`;
   }
 </script>
 </body>
